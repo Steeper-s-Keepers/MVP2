@@ -1,0 +1,60 @@
+{
+  "name": "react-template",
+  "version": "1.0.0",
+  "description": "Template for Applications using React, Babel, Webpack, Express.js & Dotenv",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "nodemon server/index.js",
+    "dev:react": "webpack --config ./webpack.config.js --mode development -w",
+    "test": "jest",
+    "build": "webpack --mode=production"
+  },
+  "author": "Sabrina Gortz",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "bootstrap": "^5.1.3",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "firebase": "^9.7.0",
+    "moment": "^2.29.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-highlight-words": "^0.18.0",
+    "react-icons": "^4.3.1",
+    "react-intersection-observer": "^8.33.1",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.0",
+    "react-scroll": "^1.8.6",
+    "use-local-storage": "^2.3.6",
+    "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.8",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.0.1",
+    "@testing-library/user-event": "^14.1.0",
+    "babel-loader": "^8.2.4",
+    "bundle-js": "^1.0.3",
+    "css-loader": "^6.7.1",
+    "eslint": "^8.12.0",
+    "jest": "^27.5.1",
+    "style-loader": "^3.3.1",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  }
+}
