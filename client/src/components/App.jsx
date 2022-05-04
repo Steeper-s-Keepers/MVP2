@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {POKER, omahaReader, bestCombo, combinator} from '/Users/coryfinkbeiner/keepers/MVP2/poker.js';
+import { POKER, omahaReader, bestCombo, combinator } from '/Users/coryfinkbeiner/keepers/MVP2/poker.js';
 // var P = POKER.POKER
 
 
@@ -9,18 +9,24 @@ const App = () => {
 
 
   return (
-  <div>
-    <h1>Hello World</h1>
-    <div>
+    <div className='grid-container'>
+
+      <div>
+        <div className='third'>
+          Villain
+        </div>
+        <div className='third'>
+          Board
+        </div>
+        <div className='third'>
+          Hero
+        </div>
+       </div>
+        <span className='display'>
+        Display
+      </span>
 
     </div>
-    <div>
-   </div>
-    <div>
-
-    </div>
-  </div>
-
   )
 
 }
