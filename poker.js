@@ -53,9 +53,11 @@ POKER.Hand.prototype.numSameSuits = function() {
 
 // number of longest consecutive card rank run
 POKER.Hand.prototype.numConnected = function() {
-  var oRanks = this.getOrderedRanks(),
-      run = max = 1,
-      thisCardRank, prevCardRank;
+  var oRanks = this.getOrderedRanks();
+var run = 1;
+var max = 1;
+    var thisCardRank;
+    var prevCardRank;
 
   for (var idx = 1; idx < oRanks.length; idx += 1) {
       thisCardRank = oRanks[idx];
@@ -283,7 +285,7 @@ POKER.Deck = function() {
       var cardArray = [],
           len = Math.min(numCards, cards.length);
       for (var idx = 0; idx < len; idx += 1) {
-          card = cards.pop();
+          var card = cards.pop();
           cardArray.push(card);
           dealt.push(card);
       }
@@ -406,56 +408,75 @@ const combinator = (arr) => {
     return result;
 }
 
-// I: array of POKER.Hands
-// 0: one POKER.Hand
-// E: draws
 const bestCombo = (combos) => {
-  var winner = combos[0]
-  for (let i = 1; i < combos.length-1; i++) {
-    winner = POKER.getWinners([combos[i], combos[i+1]])
+    var winner = combos[0]
+    for (let i = 1; i < combos.length; i++) {
+      winner = POKER.getWinners([winner, combos[i]])[0]
+    }
+    return winner;
   }
-  return winner[0];
-}
-
 
 // I: two 9-card POKER.Hands
 // O: [winner, loser]
-const omahaReader = (h1, h2) => {
+const dealer = () => {
 
-  var show1 = bestCombo(combinator(h1.cards))
-  var show2 = bestCombo(combinator(h2.cards))
+    var deck = new POKER.Deck();
+    deck.shuffle();
+    var vHole = new POKER.Hand(deck.deal(4));
+    var board = new POKER.Hand(deck.deal(5));
+    var hHole = new POKER.Hand(deck.deal(4));
 
-  var details1 = show1.getHandDetails();
-  var details2 = show2.getHandDetails();
+    // 9-card Hands
+    var vInput = POKER.handFromString((vHole.toString() + ',' + board.toString()).split(',').join(' '));
+    var hInput = POKER.handFromString((hHole.toString() + ',' + board.toString()).split(',').join(' '));
 
-  var winner = {
-    hand: POKER.getWinners([show1, show2])[0],
-    details: null
-  }
+    var a = combinator(vInput.cards)
+    var b = combinator(hInput.cards)
 
-  var loser = {
-    hand: null,
-    details: null
-  }
+    var vShow = bestCombo(a)
+    var hShow = bestCombo(b)
 
-  if (JSON.stringify(show1.cards) === JSON.stringify(winner.hand.cards)) {
-    winner.details = details1;
-    loser.hand = show2;
-    loser.details = details2;
+    var hDetails = hShow.getHandDetails();
+    var vDetails = vShow.getHandDetails();
+
+    var showdown = POKER.getWinners([hShow, vShow]);
+
+    var result = {
+        winner: '',
+        villain: {
+            hole: vHole.toString(),
+            show: vShow.toString(),
+            name: vDetails.name,
+            value: vDetails.value,
+            win: false
+        },
+        board: board.toString(),
+        hero:{
+            hole: hHole.toString(),
+            show: hShow.toString(),
+            name: hDetails.name,
+            value: hDetails.value,
+            win: false
+        }
+    }
+
+  if (vShow.toString() === showdown[0].toString()) {
+    result.villain.win = true;
+    result.winner = 'villain';
   } else {
-    winner.details = details2;
-    loser.hand = show1;
-    loser.details = details1;
+    result.hero.win = true;
+    result.winner = 'hero';
   }
 
-  return [winner, loser];
+  return result;
+
 }
 
-
 // if in Node.js environment export the POKER namespace
-export {POKER, omahaReader, bestCombo, combinator}
+export default {dealer};
 
 
 
-// , {omahaReader}, {bestCombo}, {combinator}
+
+
 

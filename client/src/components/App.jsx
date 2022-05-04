@@ -1,11 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { POKER, omahaReader, bestCombo, combinator } from '/Users/coryfinkbeiner/keepers/MVP2/poker.js';
-// var P = POKER.POKER
+import P from '/Users/coryfinkbeiner/keepers/MVP2/poker.js';
+import Villain from './Villain.jsx';
+import Board from './Board.jsx';
+import Hero from './Hero.jsx';
+import Display from './Display.jsx';
+// var P = POKER
 
+// const  = () => {
+//   return <div>handTest</div>
+// }
 
 
 const App = () => {
+
+  const [hand, setHand] = useState(P.dealer());
+  const [street, setStreet] = useState('');
+
+
+  useEffect(() => {
+    setHand(P.dealer());
+  }, [])
+
+
 
 
   return (
@@ -13,18 +30,18 @@ const App = () => {
 
       <div>
         <div className='third'>
-          Villain
+          <Villain hand={hand.villain}/>
         </div>
         <div className='third'>
-          Board
+          <Board board={hand.board}/>
         </div>
         <div className='third'>
-          Hero
+          <Hero hand={hand.hero}/>
         </div>
        </div>
-        <span className='display'>
-        Display
-      </span>
+
+        <Display hand={hand}/>
+
 
     </div>
   )

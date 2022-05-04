@@ -10,7 +10,6 @@ body {
 .third {
   height: 33vh;
   width: 70vw;
-  background-color: green;
   grid-column-start: 1;
   grid-column-end: 2;
 }
@@ -20,11 +19,17 @@ body {
   grid-template-columns: 3fr 1fr;
 }
 
-.board {
+.cards {
 
 }
 
-.hero {
+
+.info {
+  height: 50vh;
+}
+
+.action {
+  height: 50vh;
 
 }
 
@@ -32,10 +37,9 @@ body {
   grid-column-start: 2;
   grid-column-end: 2;
   height: 100vh;
-  width: 30vw;
-  background-color: blue
+  width: 70vw;
 }
-/* 
+/*
 .hand {
   display: flex;
   align-items: center;
