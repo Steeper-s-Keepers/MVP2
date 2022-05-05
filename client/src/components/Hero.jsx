@@ -11,9 +11,11 @@ const Hero = (props) => {
       <div className='cards'>
         {
           props.hand.hole.split(' ').map(c => {
-            return (
-              <Cards card={c}/>
-            )
+            if (props.street > 0) {
+              return (
+                <Cards card={c}/>
+              )
+            }
           })
         }
 

@@ -7,8 +7,17 @@ body {
   width: 100vw
 }
 
+
+
+.percent {
+  display: flex;
+  align-self: flex-start;
+  color: yellow;
+  font-size: 30px;
+}
+
 .third {
-  height: 33vh;
+  height: 33.5vh;
   width: 70vw;
   grid-column-start: 1;
   grid-column-end: 2;
@@ -37,9 +46,20 @@ body {
   background-color: white;
 }
 
+.card-read {
+    height: 50vh;
+    font-size: 22px;
+    color: white
+}
+
+/* .info {
+  height: 50vh;
+  font-size: 30px;
+  color: red
+} */
 
 .info {
-  height: 50vh;
+  color: red;
 }
 
 .deal-button {
@@ -48,6 +68,18 @@ body {
   border-radius: 400px;
   height:80px;
   width: 80px;
+}
+/*
+.readout {
+  display: flex;
+  height: 50vh;
+} */
+
+
+.read {
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
 }
 
 .action {

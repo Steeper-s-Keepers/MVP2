@@ -15,29 +15,68 @@ import Display from './Display.jsx';
 const App = () => {
 
   const [hand, setHand] = useState(P.dealer());
-  const [street, setStreet] = useState('');
+  const [street, setStreet] = useState(0);
 
+  if (street > 4) {
+    setStreet(0);
+    setHand(P.dealer());
+  }
 
   useEffect(() => {
     setHand(P.dealer());
-  }, []);
+  }, [setStreet]);
+
+  var w = hand.winner;
+  console.log('w', w)
+  var l = w === 'villain' ? 'hero' : 'villain';
+  console.log('l', l)
+  var w_h = hand.winner === 'hero' ? hand.hero.show : hand.villain.show
+  var l_h = hand.winner === 'hero' ? hand.villain.show : hand.hero.show
+
+  if (street === 0) {
+
+    axios.post('/stats', {
+      winner: 'hello',
+      loser: 'hello',
+      winning_hand: 'hello',
+      losing_hand: 'hello'
+    })
+
+
+    // axios({
+    //   method: 'POST',
+    //   url: '/stats',
+    //   data: {
+    //     winner: w,
+    //     loser: l,
+    //     winning_hand: w_h,
+    //     losing_hand: l_h
+    //   }
+    // })
+    .then(res => {
+      console.log('POST SUCCESS')
+    })
+    .catch(err => {
+      console.log('POST ERROR', err)
+    })
+  }
 
   return (
     <div className='grid-container'>
 
       <div>
         <div className='third'>
-          <Villain hand={hand.villain}/>
+          <Villain street={street} hand={hand.villain}/>
         </div>
         <div className='third'>
-          <Board board={hand.board}/>
+          <Board street={street} board={hand.board}/>
         </div>
         <div className='third'>
-          <Hero hand={hand.hero}/>
+          <Hero street={street} hand={hand.hero}/>
         </div>
        </div>
 
-        <Display setStreet={setStreet} hand={hand}/>
+        <Display street={street} setStreet={setStreet} hand={hand}/>
 
 
     </div>

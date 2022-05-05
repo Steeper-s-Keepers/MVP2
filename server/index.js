@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended: true}));
 const PORT = 3000;
 
 app.post('/stats', (req, res) => {
-  console.log(req.query)
+  console.log('POST IS IT', req.query)
   pool.query(
     `INSERT INTO
       stats

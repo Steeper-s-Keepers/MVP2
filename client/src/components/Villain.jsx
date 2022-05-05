@@ -3,19 +3,16 @@ import Cards from './Cards.jsx';
 
 const Villain = (props) => {
 
-  var dealt = true;
-
-
-  console.log('villain props', props)
-
   return (
     <div>
       <div className='cards'>
         {
           props.hand.hole.split(' ').map(c => {
-            return (
-              <Cards card={c}/>
-            )
+            if (props.street > 0) {
+              return (
+                <Cards card={c}/>
+              )
+            }
           })
         }
 
