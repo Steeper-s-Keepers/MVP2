@@ -443,6 +443,9 @@ const dealer = () => {
 
     var result = {
         winner: '',
+        loser: '',
+        winning_hand: '',
+        losing_hand: '',
         villain: {
             hole: vHole.toString(),
             show: vShow.toString(),
@@ -463,9 +466,15 @@ const dealer = () => {
   if (vShow.toString() === showdown[0].toString()) {
     result.villain.win = true;
     result.winner = 'villain';
+    result.loser = 'hero';
+    result.winning_hand = result.villain.show;
+    result.losing_hand = result.hero.show;
   } else {
     result.hero.win = true;
     result.winner = 'hero';
+    result.loser = 'villain';
+    result.winning_hand = result.hero.show;
+    result.losing_hand = result.villain.show;
   }
 
   return result;

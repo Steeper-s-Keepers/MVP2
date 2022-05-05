@@ -14,13 +14,14 @@ const PORT = 3000;
 
 app.post('/stats', (req, res) => {
   console.log('POST IS IT', req.query)
+  console.log('POSTIEEE', req.body)
   pool.query(
     `INSERT INTO
       stats
         (winner, loser, winning_hand, losing_hand)
     VALUES
       ($1, $2, $3, $4)`,
-      [req.query.winner, req.query.loser, req.query.winning_hand, req.query.losing_hand]
+      [req.body.winner, req.body.loser, req.body.winning_hand, req.body.losing_hand]
   )
   .then(result => {
     res.send(result);

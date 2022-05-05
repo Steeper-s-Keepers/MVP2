@@ -33,13 +33,13 @@ const App = () => {
   var w_h = hand.winner === 'hero' ? hand.hero.show : hand.villain.show
   var l_h = hand.winner === 'hero' ? hand.villain.show : hand.hero.show
 
-  if (street === 0) {
+  if (street === 1) {
 
     axios.post('/stats', {
-      winner: 'hello',
-      loser: 'hello',
-      winning_hand: 'hello',
-      losing_hand: 'hello'
+      winner: hand.winner,
+      loser: hand.loser,
+      winning_hand: hand.winning_hand,
+      losing_hand: hand.losing_hand
     })
 
 
