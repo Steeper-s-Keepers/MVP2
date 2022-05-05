@@ -16,7 +16,7 @@ const Display = (props) => {
                     <h2 className='card-read'>Your hand: {'   ' + props.hand.hero.name}</h2>
                     <h3 className='card-read'>Their hand: {'   ' +  props.hand.villain.name}</h3>
 
-                    <h4 className='percent'>Your win %:</h4>
+                    <h4 className='percent'>Your win %: {'  ' + props.percent}</h4>
 
                     </div>
         }

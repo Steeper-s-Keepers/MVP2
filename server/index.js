@@ -31,6 +31,22 @@ app.post('/stats', (req, res) => {
   })
 });
 
+app.get('/stats', (req, res) => {
+
+  console.log('get back')
+
+  pool.query(
+    `SELECT winner, loser FROM stats`
+  )
+  .then(result => {
+    res.send(result)
+  })
+  .catch(err => {
+    res.send(err.message)
+  })
+
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on port: 3000`);

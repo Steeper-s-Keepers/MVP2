@@ -16,6 +16,7 @@ const App = () => {
 
   const [hand, setHand] = useState(P.dealer());
   const [street, setStreet] = useState(0);
+  const [percent, setPercent] = useState(0);
 
   if (street > 4) {
     setStreet(0);
@@ -42,23 +43,32 @@ const App = () => {
       losing_hand: hand.losing_hand
     })
 
-
-    // axios({
-    //   method: 'POST',
-    //   url: '/stats',
-    //   data: {
-    //     winner: w,
-    //     loser: l,
-    //     winning_hand: w_h,
-    //     losing_hand: l_h
-    //   }
-    // })
     .then(res => {
       console.log('POST SUCCESS')
     })
     .catch(err => {
       console.log('POST ERROR', err)
     })
+  }
+  if (street === 3) {
+    axios.get('/stats')
+    .then(res => {
+      var hWins = 0;
+      var vWins = 0;
+      res.data.rows.forEach(hand => {
+        console.log('hv', hWins, vWins)
+        if (hand.winner === 'villain') {
+          vWins++;
+        }
+        if (hand.winner === 'hero') {
+          hWins++;
+        }
+      })
+      console.log('pursy', percent)
+      var per = (hWins/(vWins + hWins)) * 100;
+      setPercent(per)
+    })
+    .catch(err => console.log(err))
   }
 
   return (
@@ -76,7 +86,7 @@ const App = () => {
         </div>
        </div>
 
-        <Display street={street} setStreet={setStreet} hand={hand}/>
+        <Display percent={percent} street={street} setStreet={setStreet} hand={hand}/>
 
 
     </div>
