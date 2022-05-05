@@ -12,6 +12,7 @@ body {
   width: 70vw;
   grid-column-start: 1;
   grid-column-end: 2;
+  background-color: green;
 }
 
 .grid-container {
@@ -20,7 +21,20 @@ body {
 }
 
 .cards {
+  display:flex;
+  flex-direction: row;
+}
 
+.card {
+  flex-basis: 180px;
+  height: 172px;
+  border: 1px solid;
+  border-radius: 12px;
+  padding: 24px;
+  box-sizing: border-box;
+  position: relative;
+  width: 1118px;
+  background-color: white;
 }
 
 
@@ -28,9 +42,18 @@ body {
   height: 50vh;
 }
 
-.action {
-  height: 50vh;
+.deal-button {
+  display: flex;
+  align-self: center;
+  border-radius: 400px;
+  height:80px;
+  width: 80px;
+}
 
+.action {
+  display: flex;
+  height: 50vh;
+  align-content: center;
 }
 
 .display {
@@ -38,6 +61,7 @@ body {
   grid-column-end: 2;
   height: 100vh;
   width: 70vw;
+  background-color: black;
 }
 /*
 .hand {

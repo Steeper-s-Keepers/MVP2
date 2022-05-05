@@ -12,7 +12,7 @@ const Display = (props) => {
 
   var winner = props.hand.winner;
   console.log('display winner', winner)
-  
+
 
 
   return (
@@ -25,7 +25,9 @@ const Display = (props) => {
       </div>
       <div className='action'>
 
-        Action
+        <button className='deal-button'>
+          <h1>Deal</h1>
+        </button>
 
       </div>
 

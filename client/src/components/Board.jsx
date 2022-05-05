@@ -7,9 +7,18 @@ const Board = (props)=> {
 
   return (
     <div>
-      <div>Board</div>
-      <Cards cards={props.board} />
+      <div className='cards'>
+        {
+          props.board.split(' ').map(c => {
+            return (
+              <Cards card={c}/>
+            )
+          })
+        }
+
+      </div>
     </div>
+
 
   )
 }

@@ -20,10 +20,7 @@ const App = () => {
 
   useEffect(() => {
     setHand(P.dealer());
-  }, [])
-
-
-
+  }, []);
 
   return (
     <div className='grid-container'>
@@ -40,7 +37,7 @@ const App = () => {
         </div>
        </div>
 
-        <Display hand={hand}/>
+        <Display setStreet={setStreet} hand={hand}/>
 
 
     </div>

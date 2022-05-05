@@ -1,5 +1,7 @@
-CREATE TABLE photos (
+CREATE TABLE stats (
   id SERIAL PRIMARY KEY,
-  review_id INTEGER,
-  url TEXT
+  winner TEXT,
+  loser TEXT,
+  winning_hand TEXT,
+  losing_hand TEXT
 );

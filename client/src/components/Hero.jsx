@@ -8,8 +8,16 @@ const Hero = (props) => {
 
   return (
     <div>
-      <div>Hero</div>
-      <div>{props.hand.hole}</div>
+      <div className='cards'>
+        {
+          props.hand.hole.split(' ').map(c => {
+            return (
+              <Cards card={c}/>
+            )
+          })
+        }
+
+      </div>
     </div>
   )
 }
