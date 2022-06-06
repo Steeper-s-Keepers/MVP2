@@ -18,23 +18,38 @@ const App = () => {
   const [street, setStreet] = useState(0);
   const [percent, setPercent] = useState(0);
 
+  useEffect(() => {
+    // setHand(P.dealer());
+    var w = hand.winner;
+    // console.log('w', w)
+    var l = w === 'villain' ? 'hero' : 'villain';
+    // console.log('l', l)
+    var w_h = hand.winner === 'hero' ? hand.hero.show : hand.villain.show
+    var l_h = hand.winner === 'hero' ? hand.villain.show : hand.hero.show
+  }, []);
+
   if (street > 4) {
     setStreet(0);
     setHand(P.dealer());
+    // var w = hand.winner;
+    // // console.log('w', w)
+    // var l = w === 'villain' ? 'hero' : 'villain';
+    // // console.log('l', l)
+    // var w_h = hand.winner === 'hero' ? hand.hero.show : hand.villain.show
+    // var l_h = hand.winner === 'hero' ? hand.villain.show : hand.hero.show
   }
 
-  useEffect(() => {
-    setHand(P.dealer());
-  }, [setStreet]);
+  // console.log('hand', hand)
 
-  var w = hand.winner;
-  console.log('w', w)
-  var l = w === 'villain' ? 'hero' : 'villain';
-  console.log('l', l)
-  var w_h = hand.winner === 'hero' ? hand.hero.show : hand.villain.show
-  var l_h = hand.winner === 'hero' ? hand.villain.show : hand.hero.show
+  // var w = hand.winner;
+  // // console.log('w', w)
+  // var l = w === 'villain' ? 'hero' : 'villain';
+  // // console.log('l', l)
+  // var w_h = hand.winner === 'hero' ? hand.hero.show : hand.villain.show
+  // var l_h = hand.winner === 'hero' ? hand.villain.show : hand.hero.show
 
   if (street === 1) {
+
 
     axios.post('/stats', {
       winner: hand.winner,
@@ -44,7 +59,14 @@ const App = () => {
     })
 
     .then(res => {
-      console.log('POST SUCCESS')
+      // console.log('POST object',
+      // {
+      //   winner: hand.winner,
+      //   loser: hand.loser,
+      //   winning_hand: hand.winning_hand,
+      //   losing_hand: hand.losing_hand
+      // })
+      // console.log('POST SUCCESS')
     })
     .catch(err => {
       console.log('POST ERROR', err)
@@ -56,7 +78,7 @@ const App = () => {
       var hWins = 0;
       var vWins = 0;
       res.data.rows.forEach(hand => {
-        console.log('hv', hWins, vWins)
+        // console.log('hv', hWins, vWins)
         if (hand.winner === 'villain') {
           vWins++;
         }
@@ -64,7 +86,7 @@ const App = () => {
           hWins++;
         }
       })
-      console.log('pursy', percent)
+      // console.log('pursy', percent)
       var per = (hWins/(vWins + hWins)) * 100;
       setPercent(per)
     })
@@ -91,9 +113,89 @@ const App = () => {
 
     </div>
   )
-
 }
 
+
+// const App = () => {
+
+//   const [hand, setHand] = useState(P.dealer());
+//   const [street, setStreet] = useState(0);
+//   const [percent, setPercent] = useState(0);
+
+//   if (street > 4) {
+//     setStreet(0);
+//     setHand(P.dealer());
+//   }
+
+//   useEffect(() => {
+//     setHand(P.dealer());
+//   }, [setStreet]);
+
+//   var w = hand.winner;
+//   // console.log('w', w)
+//   var l = w === 'villain' ? 'hero' : 'villain';
+//   // console.log('l', l)
+//   var w_h = hand.winner === 'hero' ? hand.hero.show : hand.villain.show
+//   var l_h = hand.winner === 'hero' ? hand.villain.show : hand.hero.show
+
+//   if (street === 1) {
+
+//     axios.post('/stats', {
+//       winner: hand.winner,
+//       loser: hand.loser,
+//       winning_hand: hand.winning_hand,
+//       losing_hand: hand.losing_hand
+//     })
+
+//     .then(res => {
+//       console.log('POST SUCCESS')
+//     })
+//     .catch(err => {
+//       console.log('POST ERROR', err)
+//     })
+//   }
+//   if (street === 3) {
+//     axios.get('/stats')
+//     .then(res => {
+//       var hWins = 0;
+//       var vWins = 0;
+//       res.data.rows.forEach(hand => {
+//         // console.log('hv', hWins, vWins)
+//         if (hand.winner === 'villain') {
+//           vWins++;
+//         }
+//         if (hand.winner === 'hero') {
+//           hWins++;
+//         }
+//       })
+//       // console.log('pursy', percent)
+//       var per = (hWins/(vWins + hWins)) * 100;
+//       setPercent(per)
+//     })
+//     .catch(err => console.log(err))
+//   }
+
+//   return (
+//     <div className='grid-container'>
+
+//       <div>
+//         <div className='third'>
+//           <Villain street={street} hand={hand.villain}/>
+//         </div>
+//         <div className='third'>
+//           <Board street={street} board={hand.board}/>
+//         </div>
+//         <div className='third'>
+//           <Hero street={street} hand={hand.hero}/>
+//         </div>
+//        </div>
+
+//         <Display percent={percent} street={street} setStreet={setStreet} hand={hand}/>
+
+
+//     </div>
+//   )
+// }
 
 export default App;
 

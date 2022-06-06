@@ -3,7 +3,7 @@ import Cards from './Cards.jsx';
 
 const Board = (props)=> {
 
-  console.log('board props', props)
+  // console.log('board props', props)
 
   var limit = 0;
 

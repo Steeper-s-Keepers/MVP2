@@ -382,23 +382,28 @@ POKER.getWinners = function(hands) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+
 const combinator = (arr) => {
+
+    // console.log('arr', arr)
+
+
     let result = [];
     let combo = [];
 
     const rfunc = (index) => {
-    for (let j = index; j < arr.length; j++) {
+      for (let j = index; j < arr.length; j++) {
         combo.push(arr[j]);
         if (combo.length === 5) {
-          // new Hand
-             result.push(new POKER.Hand(combo));
-             combo = combo.slice(0, combo.length-1);
+        // new Hand
+          result.push(new POKER.Hand(combo));
+          combo = combo.slice(0, combo.length-1);
         } else {
-            rfunc(j + 1);
+          rfunc(j + 1);
         }
+      }
+      combo = combo.slice(0, combo.length-1);
     }
-    combo = combo.slice(0, combo.length-1);
-  }
 
     for (let i = 0; i < (arr.length - 5 + 1); i++) {
       combo.push(arr[i]);
@@ -416,9 +421,9 @@ const bestCombo = (combos) => {
     return winner;
   }
 
-// I: two 9-card POKER.Hands
-// O: [winner, loser]
-const dealer = () => {
+  const dealer = () => {
+
+
 
     var deck = new POKER.Deck();
     deck.shuffle();
@@ -426,15 +431,64 @@ const dealer = () => {
     var board = new POKER.Hand(deck.deal(5));
     var hHole = new POKER.Hand(deck.deal(4));
 
-    // 9-card Hands
-    var vInput = POKER.handFromString((vHole.toString() + ',' + board.toString()).split(',').join(' '));
-    var hInput = POKER.handFromString((hHole.toString() + ',' + board.toString()).split(',').join(' '));
+    const x = (hole, board, combos=[]) => {
 
-    var a = combinator(vInput.cards)
-    var b = combinator(hInput.cards)
+      if (hole.length < 2) {
+          return
+      }
 
-    var vShow = bestCombo(a)
-    var hShow = bestCombo(b)
+        for (let i = 1; i < hole.length; i++) {
+            var combo = [];
+
+            combo.push(...board.cards);
+            combo.push(hole[0])
+            combo.push(hole[i])
+            combo.flat()
+            combos.push(combo)
+
+        }
+      x(hole.slice(1), board, combos)
+      return combos
+    }
+
+    var vPerms = x(vHole.cards, board)
+    var hPerms = x(hHole.cards, board)
+
+    var vPerms2 = []
+    var hPerms2 = []
+
+
+    vPerms.forEach(perm => {
+      vPerms2.push(combinator(perm))
+    })
+    hPerms.forEach(perm => {
+      hPerms2.push(combinator(perm))
+    })
+
+    vPerms2 = vPerms2.flat()
+    hPerms2 = hPerms2.flat()
+
+    const omahaCorrecter = (perms, hole) => {
+      var result = [];
+      perms.forEach(perm => {
+        var count = 0;
+        perm.cards.forEach(card => {
+            if (hole.cards.includes(card)) {
+                count++
+            }
+        })
+        if (count === 2) {
+            result.push(perm)
+        }
+      })
+      return result
+    }
+
+    vPerms2 = omahaCorrecter(vPerms2, vHole)
+    hPerms2 = omahaCorrecter(hPerms2, hHole)
+
+    var vShow = bestCombo(vPerms2)
+    var hShow = bestCombo(hPerms2)
 
     var hDetails = hShow.getHandDetails();
     var vDetails = vShow.getHandDetails();
@@ -454,7 +508,7 @@ const dealer = () => {
             win: false
         },
         board: board.toString(),
-        hero:{
+        hero: {
             hole: hHole.toString(),
             show: hShow.toString(),
             name: hDetails.name,
@@ -463,27 +517,242 @@ const dealer = () => {
         }
     }
 
-  if (vShow.toString() === showdown[0].toString()) {
-    result.villain.win = true;
-    result.winner = 'villain';
-    result.loser = 'hero';
-    result.winning_hand = result.villain.show;
-    result.losing_hand = result.hero.show;
-  } else {
-    result.hero.win = true;
-    result.winner = 'hero';
-    result.loser = 'villain';
-    result.winning_hand = result.hero.show;
-    result.losing_hand = result.villain.show;
-  }
+    if (vShow.toString() === showdown[0].toString()) {
+      result.villain.win = true;
+      result.winner = 'villain';
+      result.loser = 'hero';
+      result.winning_hand = result.villain.show;
+      result.losing_hand = result.hero.show;
+    } else {
+      result.hero.win = true;
+      result.winner = 'hero';
+      result.loser = 'villain';
+      result.winning_hand = result.hero.show;
+      result.losing_hand = result.villain.show;
+    }
 
-  return result;
+    // console.log(result)
+
+    return result;
 
 }
 
-// if in Node.js environment export the POKER namespace
-export default {dealer};
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const combinator = (arr) => {
+
+//     // console.log('arr', arr)
+
+
+//     let result = [];
+//     let combo = [];
+
+//     const rfunc = (index) => {
+//       for (let j = index; j < arr.length; j++) {
+//         combo.push(arr[j]);
+//         if (combo.length === 5) {
+//         // new Hand
+//           result.push(new POKER.Hand(combo));
+//           combo = combo.slice(0, combo.length-1);
+//         } else {
+//           rfunc(j + 1);
+//         }
+//       }
+//       combo = combo.slice(0, combo.length-1);
+//     }
+
+//     for (let i = 0; i < (arr.length - 5 + 1); i++) {
+//       combo.push(arr[i]);
+//       rfunc(i + 1);
+//       combo = [];
+//     }
+//     console.log('combinator reslult', result)
+//     return result;
+// }
+
+// const bestCombo = (combos) => {
+//     var winner = combos[0]
+//     for (let i = 1; i < combos.length; i++) {
+//       winner = POKER.getWinners([winner, combos[i]])[0]
+//     }
+//     return winner;
+//   }
+
+//   const dealer = () => {
+
+//     var deck = new POKER.Deck();
+//     deck.shuffle();
+//     var vHole = new POKER.Hand(deck.deal(4));
+//     var board = new POKER.Hand(deck.deal(5));
+//     var hHole = new POKER.Hand(deck.deal(4));
+
+//     const x = (hole, board) => {
+//         for (let i = 0; i< hole.length; i++) {
+//             console.log(hole[i]);
+//         }
+//     }
+
+//     // // 9-card Hands
+//     // var vInput = POKER.handFromString((vHole.toString() + ',' + board.toString()).split(',').join(' '));
+//     // var hInput = POKER.handFromString((hHole.toString() + ',' + board.toString()).split(',').join(' '));
+
+//     // console.log('combinator input V', vInput.cards)
+
+//     // var a = combinator(vInput.cards)
+//     // var b = combinator(hInput.cards)
+
+//     // var vShow = bestCombo(a)
+//     // var hShow = bestCombo(b)
+
+//     // var hDetails = hShow.getHandDetails();
+//     // var vDetails = vShow.getHandDetails();
+
+//     // var showdown = POKER.getWinners([hShow, vShow]);
+
+//     // var result = {
+//     //     winner: '',
+//     //     loser: '',
+//     //     winning_hand: '',
+//     //     losing_hand: '',
+//     //     villain: {
+//     //         hole: vHole.toString(),
+//     //         show: vShow.toString(),
+//     //         name: vDetails.name,
+//     //         value: vDetails.value,
+//     //         win: false
+//     //     },
+//     //     board: board.toString(),
+//     //     hero: {
+//     //         hole: hHole.toString(),
+//     //         show: hShow.toString(),
+//     //         name: hDetails.name,
+//     //         value: hDetails.value,
+//     //         win: false
+//     //     }
+//     // }
+
+// //   if (vShow.toString() === showdown[0].toString()) {
+// //     result.villain.win = true;
+// //     result.winner = 'villain';
+// //     result.loser = 'hero';
+// //     result.winning_hand = result.villain.show;
+// //     result.losing_hand = result.hero.show;
+// //   } else {
+// //     result.hero.win = true;
+// //     result.winner = 'hero';
+// //     result.loser = 'villain';
+// //     result.winning_hand = result.hero.show;
+// //     result.losing_hand = result.villain.show;
+// //   }
+
+// //   return result;
+
+// }
+
+// // I: two 9-card POKER.Hands
+// // O: [winner, loser]
+// // const dealer = () => {
+
+// //     var deck = new POKER.Deck();
+// //     deck.shuffle();
+// //     var vHole = new POKER.Hand(deck.deal(4));
+// //     var board = new POKER.Hand(deck.deal(5));
+// //     var hHole = new POKER.Hand(deck.deal(4));
+
+// //     // 9-card Hands
+// //     var vInput = POKER.handFromString((vHole.toString() + ',' + board.toString()).split(',').join(' '));
+// //     var hInput = POKER.handFromString((hHole.toString() + ',' + board.toString()).split(',').join(' '));
+
+// //     console.log('combinator input V', vInput.cards)
+
+// //     var a = combinator(vInput.cards)
+// //     var b = combinator(hInput.cards)
+
+// //     var vShow = bestCombo(a)
+// //     var hShow = bestCombo(b)
+
+// //     var hDetails = hShow.getHandDetails();
+// //     var vDetails = vShow.getHandDetails();
+
+// //     var showdown = POKER.getWinners([hShow, vShow]);
+
+// //     var result = {
+// //         winner: '',
+// //         loser: '',
+// //         winning_hand: '',
+// //         losing_hand: '',
+// //         villain: {
+// //             hole: vHole.toString(),
+// //             show: vShow.toString(),
+// //             name: vDetails.name,
+// //             value: vDetails.value,
+// //             win: false
+// //         },
+// //         board: board.toString(),
+// //         hero: {
+// //             hole: hHole.toString(),
+// //             show: hShow.toString(),
+// //             name: hDetails.name,
+// //             value: hDetails.value,
+// //             win: false
+// //         }
+// //     }
+
+// //   if (vShow.toString() === showdown[0].toString()) {
+// //     result.villain.win = true;
+// //     result.winner = 'villain';
+// //     result.loser = 'hero';
+// //     result.winning_hand = result.villain.show;
+// //     result.losing_hand = result.hero.show;
+// //   } else {
+// //     result.hero.win = true;
+// //     result.winner = 'hero';
+// //     result.loser = 'villain';
+// //     result.winning_hand = result.hero.show;
+// //     result.losing_hand = result.villain.show;
+// //   }
+
+// //   return result;
+
+// // }
+
+// // if in Node.js environment export the POKER namespace
+export default {dealer};
 
 
 

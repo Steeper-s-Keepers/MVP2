@@ -4,7 +4,7 @@ import Cards from './Cards.jsx';
 const Hero = (props) => {
 
 
-  console.log('Hero props', props)
+  // console.log('Hero props', props)
 
   return (
     <div>

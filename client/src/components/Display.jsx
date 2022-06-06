@@ -16,7 +16,7 @@ const Display = (props) => {
                     <h2 className='card-read'>Your hand: {'   ' + props.hand.hero.name}</h2>
                     <h3 className='card-read'>Their hand: {'   ' +  props.hand.villain.name}</h3>
 
-                    <h4 className='percent'>Your win %: {'  ' + props.percent}</h4>
+                    <h4 className='percent'>Your win % {'  ' + props.percent}</h4>
 
                     </div>
         }
@@ -24,7 +24,7 @@ const Display = (props) => {
       <div className='action'>
 
         <button onClick={() => {
-          console.log('BUTT');
+          // console.log('BUTT');
           props.setStreet(props.street+1);
         }} className='deal-button'>
           <h1>Deal</h1>
