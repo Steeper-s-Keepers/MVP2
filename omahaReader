@@ -1,10 +1,13 @@
+
+
 var POKER = {
-  rankToString: ['', '', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'L', 'M', 'N', 'O', 'J', 'Q', 'K', 'A'],
+  rankToString: ['', '', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J',
+      'Q', 'K', 'A'],
   rankToWord: ['', '', 'two', 'three', 'four', 'five', 'six', 'seven',
-      'eight', 'nine', 'ten', 'L', 'M', 'N', 'O', 'jack', 'queen', 'king', 'ace'],
+      'eight', 'nine', 'ten', 'jack', 'queen', 'king', 'ace'],
   suitToString: ['h', 'd', 'c', 's'],
   rankToInt: {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
-      'T': 10, 'L': 11, 'M': 12, 'N': 13, 'O': 14, 'J': 15, 'Q': 16, 'K': 17, 'A': 18},
+      'T': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14},
   suitToInt: {'h': 0, 'd': 1, 'c': 2, 's': 3},
   HAND_TYPE: {'HIGH_CARD': 1, 'PAIR': 2, 'TWO_PAIR': 3, 'TRIPS': 4,
       'STRAIGHT': 5, 'FLUSH': 6, 'FULL_HOUSE': 7, 'QUADS': 8,
@@ -751,7 +754,8 @@ const bestCombo = (combos) => {
 // // }
 
 // // if in Node.js environment export the POKER namespace
-export default {dealer};
+// export default {dealer};
+
 
 
 
