@@ -7,10 +7,10 @@ const Villain = (props) => {
     <div>
       <div className='cards'>
         {
-          props.hand.hole.split(' ').map(c => {
+          props.hand.hole.split(' ').map((c, i) => {
             if (props.street > 0) {
               return (
-                <Cards card={c}/>
+                <Cards card={c} key={i}/>
               )
             }
           })

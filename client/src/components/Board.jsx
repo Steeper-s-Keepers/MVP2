@@ -24,7 +24,7 @@ const Board = (props)=> {
           props.board.split(' ').map((c, i) => {
             if (i < limit) {
               return (
-                <Cards card={c}/>
+                <Cards card={c} key={i}/>
               )
             }
           })
