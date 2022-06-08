@@ -18,7 +18,7 @@ const Display = (props) => {
     <div>
       {props.street === 0
       ? <button onClick={() => props.setStreet(1)}>Deal</button>
-      :<Action action={props.action} facingBet={props.facingBet} setAction={props.setAction} street={props.street} setStreet={props.setStreet}/>
+      :<Action action={props.action} facingBet={props.facingBet} setFacingBet={props.setFacingBet} setAction={props.setAction} street={props.street} setStreet={props.setStreet} setHStack={props.setHStack} setVStack={props.setVStack} setPot={props.setPot} pot={props.pot} vStack={props.vStack} hStack={props.hStack}/>
       }
 
     </div>

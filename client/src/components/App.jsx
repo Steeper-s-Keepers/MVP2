@@ -82,7 +82,7 @@ const App = () => {
         </div>
        </div>
 
-        <Display facingBet={facingBet} vStack={vStack} hStack={hStack} pot={pot} action={action} percent={percent} street={street} setStreet={setStreet} hand={hand} setAction={setAction}/>
+        <Display facingBet={facingBet} vStack={vStack} hStack={hStack} pot={pot} setPot={setPot} action={action} percent={percent} street={street} setStreet={setStreet} hand={hand} setAction={setAction} setHStack={setHStack} setFacingBet={setFacingBet} setVStack={setVStack}/>
 
 
     </div>

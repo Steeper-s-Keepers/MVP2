@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 const Action = (props) => {
 
+  const [betSize, setBetSize] = useState(0)
+
   let player;
   let render;
 
@@ -29,18 +31,32 @@ const Action = (props) => {
       <div>
         <button onClick={() => {
           if (!props.action) {
-            console.log('action after !action', props.action)
             props.setAction(true)
             props.setStreet(props.street+1)
           } else {
-            console.log('action after else', props.action)
             props.setAction(false)
           }
         }}>Check</button>
-        <form>
+        <form
+          onSubmit={e => {
+            console.log('asodhf;oaisdjf')
+            props.setPot(props.pot + +betSize)
+            if (props.action) {
+              props.setHStack(props.hStack - betSize)
+            } else {
+              props.setVStack(props.vStack - betSize)
+            }
+            props.setFacingBet(+betSize)
+            props.setAction(!props.action)
+            e.preventDefault()
+          }
+        }>
           <label>
-            Bet
-            <input type="text" name="name" />
+            Name:
+            <input type="text" value={betSize}
+              onChange={e => {
+                setBetSize(e.target.value)
+              }} />
           </label>
           <input type="submit" value="Submit" />
         </form>
@@ -62,3 +78,13 @@ const Action = (props) => {
 }
 
 export default Action;
+
+
+{/* <form>
+<label>
+  Bet
+  <input type="text" name="name" />
+</label>
+<input
+type="submit" value="Submit" />
+</form> */}
