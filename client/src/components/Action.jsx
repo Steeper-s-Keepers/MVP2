@@ -52,7 +52,16 @@ const Action = (props) => {
           setBetSize(0)
           setRaiseSize(0)
         }}>Call</button>
-        <div>Fold</div>
+        <button onClick={() => {
+          if (props.action) {
+            props.setVStack(props.vStack + +props.pot)
+          } else {
+            props.setHStack(props.hStack + +props.pot)
+          }
+          props.setPot(0)
+          props.setStreet(0)
+          props.setFacingBet(false)
+        }}>Fold</button>
       </div>
   } else {
     render =
