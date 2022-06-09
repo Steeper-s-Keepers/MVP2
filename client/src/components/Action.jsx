@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 const Action = (props) => {
 
   const [betSize, setBetSize] = useState(0)
+  const [raiseSize, setRaiseSize] = useState(0)
 
   let player;
   let render;
@@ -16,14 +17,41 @@ const Action = (props) => {
   if (props.facingBet) {
     render =
       <div>
-        <form>
-          <label>
-            Raise
-            <input type="text" name="name" />
+        <form
+        onSubmit={e => {
+          props.setPot(props.pot + +raiseSize + props.facingBet)
+          if (props.action) {
+            props.setHStack(props.hStack - raiseSize - props.facingBet)
+          } else {
+            props.setVStack(props.vStack - raiseSize - props.facingBet)
+          }
+          props.setFacingBet(+raiseSize)
+          props.setAction(!props.action)
+          e.preventDefault()
+          }
+        }>
+
+        <label>
+          <input type="submit" value="Raise" />
+            <input type="text" value={raiseSize}
+              onChange={e => {
+                setRaiseSize(e.target.value)
+              }} />
           </label>
-        <input type="submit" value="Submit" />
         </form>
-        <div>Call</div>
+        <button onClick={() => {
+          if (props.action) {
+            props.setHStack(props.hStack - props.facingBet)
+          } else {
+            props.setVStack(props.vStack - props.facingBet)
+          }
+          props.setPot(props.pot + +props.facingBet)
+          props.setStreet(props.street+1)
+          props.setAction(!props.action)
+          props.setFacingBet(false)
+          setBetSize(0)
+          setRaiseSize(0)
+        }}>Call</button>
         <div>Fold</div>
       </div>
   } else {
@@ -39,7 +67,6 @@ const Action = (props) => {
         }}>Check</button>
         <form
           onSubmit={e => {
-            console.log('asodhf;oaisdjf')
             props.setPot(props.pot + +betSize)
             if (props.action) {
               props.setHStack(props.hStack - betSize)
@@ -52,13 +79,13 @@ const Action = (props) => {
           }
         }>
           <label>
-            Name:
+          <input type="submit" value="Bet" />
             <input type="text" value={betSize}
               onChange={e => {
                 setBetSize(e.target.value)
               }} />
           </label>
-          <input type="submit" value="Submit" />
+
         </form>
       </div>
   }
