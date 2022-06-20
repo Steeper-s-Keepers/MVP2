@@ -18,8 +18,7 @@ const App = () => {
   const [hStack, setHStack] = useState(100)
 
   const [facingBet, setFacingBet] = useState(false)
-
-
+  
 
   useEffect(() => {
     var w = hand.winner;
